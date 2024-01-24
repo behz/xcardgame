@@ -10,6 +10,7 @@ interface CardProps {
     cardBackground: string;
     isRevealed: boolean;
     isSelected: boolean;
+    isOpponentSelected: boolean;
     onSelect: (id: number) => void;
 }
 
@@ -19,14 +20,14 @@ const springConfig = {
     damping: 40,
 };
 
-const Card: React.FC<CardProps> = ({ cardId, cardIcon, cardBackground, isRevealed, isSelected, onSelect }) => {
+const Card: React.FC<CardProps> = ({ cardId, cardIcon, cardBackground, isRevealed, isSelected, isOpponentSelected, onSelect }) => {
     // const [isFlipped, setIsFlipped] = useState(false);
     const [rotateX, setRotateX] = useState(0);
     const [rotateY, setRotateY] = useState(0);
     const cardRef = useRef<HTMLDivElement>(null);
 
     const handleCardClick = () => {
-        if (!isSelected) {
+        if (!isSelected && !isOpponentSelected) {
             onSelect(cardId);
         }
         // setIsFlipped(!isFlipped);
@@ -58,14 +59,14 @@ const Card: React.FC<CardProps> = ({ cardId, cardIcon, cardBackground, isReveale
 
     return (
         <motion.div
-            className={`${isSelected ? styles.selectd : ''}`}
+            className={`${isSelected ? styles.selectd : ''} ${isOpponentSelected ? styles.opponentSelectd : ''} animate-in `}
             onClick={handleCardClick}
             transition={springConfig}
             style={{ perspective: "1200px", transformStyle: "preserve-3d", width: "15em", height: "20em" }}
         >
             <motion.div
                 ref={cardRef}
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: isOpponentSelected ? 1 : 1.1 }}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseEnd}
                 transition={springConfig}

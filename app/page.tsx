@@ -2,7 +2,6 @@
 import AuthButton from "../components/AuthButton";
 import { createClient } from "@/utils/supabase/server";
 
-import Header from "@/components/Header";
 import { cookies } from "next/headers";
 import Game from '../components/Game';
 import { UserProvider } from '../contexts/userContext';
@@ -34,8 +33,7 @@ const index: React.FC = () => {
         </div>
       </nav>
 
-      <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 px-3 w-full items-center ">
-        <Header />
+      <div className="flex-1 flex flex-col gap-20 px-3 w-full items-center ">
         <main className="flex-1 flex flex-col gap-6 w-full items-center">
           <UserProvider>
             <Game/>

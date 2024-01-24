@@ -27,10 +27,19 @@
 }
 
 .revlealedContent {
+    filter: grayscale(100%);
     display: flex;
     align-items: center;
     justify-content: center;
 }
+.selectd .revlealedContent {
+    filter: none;
+}
 .revlealedContent .icon {
-    font-size: 10em;
+    font-size: 8em;
+}
+
+.opponentSelectd .card {
+    box-shadow: 0px 0px 0px 5px rgba(76, 0, 130, 0.2), 0px 7px 20px 0px rgb(0 0 0 / 20%);
+    cursor: auto;
 }

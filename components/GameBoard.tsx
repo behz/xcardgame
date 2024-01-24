@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import useGame from '../hooks/useGame';
 import Card from './Card';
+import { useGameContext } from '../contexts/gameContext';
+import { useUserContext } from '../contexts/userContext';
 
 import img1 from '../public/images/img1.avif'
 import img2 from '../public/images/img2.avif'
@@ -35,22 +37,49 @@ const shuffleArray = <T extends unknown>(array: T[]): T[] => {
     return array;
 };
 
+function createUsernameFromUUID(uuid: string): string {
+    // Split the UUID into parts
+    const parts = uuid.split('-');
+  
+    // Take the first character from each of the first four parts
+    let username = '';
+    for (let i = 0; i < 4; i++) {
+      username += parts[i][0];
+    }
+  
+    return username;
+  }
+
 const cards: Card[] = [
-    { id: 1, icon: ':)' },
-    { id: 2, icon: ':P' },
-    { id: 3, icon: '♔' },
+    { id: 1, icon: '👻' },
+    { id: 2, icon: '🙈' },
+    { id: 3, icon: '🤴🏻' },
 ];
 const cardImages = [ img1, img2, img3, img4, img5, img6, img7, img8 ];
 
 
 const GameBoard: React.FC = () => {
 
-    const { joinGame, selectCard } = useGame();
+    const { joinGame, selectCard, setWinner } = useGame();
 
-    const [selectedCard, setSelectedCard] = useState<number>(0);
+    const { isFirstPlayer, setIsFirstPlayer } = useGameContext();
+    const { opponentId, setOpponentId } = useGameContext();
+    const { opponentSelectedCard, setOpponentSelectedCard } = useGameContext();
+    const { mySelectedCard, setMySelectedCard } = useGameContext();
+    const { userId, setUserId } = useUserContext();
+
+
     const [shuffledCards, setShuffledCards] = useState<Card[]>([]);
     const [shuffledCardsImages, setShuffledCardsImages] = useState<StaticImageData[]>([]);
     const [isRevealed, setIsRevealed] = useState<boolean>(false);
+
+    const opponentEmojis = ['😀', '😃', '😄', '😋', '😝', '🤗', '😍', '🙃', '🤡', '😺', '👽', '😈', '😎', '🐶', '🐻‍❄️', '🐤', '🧑‍🎤', '🧑‍🎨', '👩‍💻', '🤵‍♂️', '🤵‍♀️', '👩‍🦰', '🤖', '😏'];
+    const [opponentEmoji, setOpponentEmoji] = useState<string>('');
+
+    useEffect(() => {
+        const randomIndex = Math.floor(Math.random() * opponentEmojis.length);
+        setOpponentEmoji(opponentEmojis[randomIndex]);
+    }, []);
 
     useEffect(() => {
         setShuffledCards(shuffleArray([...cards]));
@@ -59,33 +88,66 @@ const GameBoard: React.FC = () => {
 
     useEffect(() => {
         joinGame();
-    }, [joinGame]);
+    },[]);
+
+    useEffect(() => {
+        if (opponentSelectedCard && mySelectedCard) {
+            setWinner(opponentSelectedCard == 3 ? opponentId : userId );
+            setTimeout( () => {setIsRevealed(true);},1000) 
+        }
+    }, [opponentSelectedCard, mySelectedCard]);
+
 
     const handleCardSelect = (id: number) => {
-        if(selectedCard) return
-        setSelectedCard(id);
+        if(mySelectedCard) return
+        setMySelectedCard(id);
         selectCard(id);
         // Update game state here and send update to Supabase
     };
 
     return (
-        <div
-            className={styles.board}
-            // className="relative flex flex-row justify-center"
-        >
-            {shuffledCards.map((card) => (
-                <Card
-                    key={card.id}
-                    cardId={card.id}
-                    cardBackground={shuffledCardsImages[card.id-1].src}
-                    isRevealed={isRevealed}
-                    isSelected={selectedCard === card.id}
-                    cardIcon={card.icon}
-                    onSelect={handleCardSelect}
-                />
-            ))}
-            {/* <button onClick={resetGame}>Reset Game</button> */}
-        </div>
+        <>
+            <div className={styles.board}>
+                {shuffledCards.map((card) => (
+                    <Card
+                        key={card.id}
+                        cardId={card.id}
+                        cardBackground={shuffledCardsImages[card.id-1].src}
+                        isRevealed={isRevealed}
+                        isSelected={mySelectedCard === card.id}
+                        isOpponentSelected={opponentSelectedCard === card.id}
+                        cardIcon={card.icon}
+                        onSelect={handleCardSelect}
+                    />
+                ))}
+                {/* <button onClick={resetGame}>Reset Game</button> */}
+            </div>
+            <p className="font-thin text-3xl lg:text-3xl !leading-tight mx-auto max-w-xl text-center mt-20">
+                { !isRevealed && !mySelectedCard && <span>Pick a card</span>}
+                { (!opponentSelectedCard && mySelectedCard ) ? <span>Waiting for opponent to select a card ...</span> : null}
+                { (!isRevealed && opponentSelectedCard && mySelectedCard ) ? <span>The winner is ...</span> : null}
+                { isRevealed && <span>{mySelectedCard == 3 ? 'Congratulations! 🎉  +10 Points received.' : 'You lost! Start a new match!'}</span>}
+            </p>
+            { !isRevealed && !mySelectedCard && <p className="font-thin mx-auto max-w-xl text-center mt-4">
+                Choosing the king card ensures your victory! 😊
+            </p>}
+
+            { opponentId &&
+                <div className={`${styles.opponentContainer} animate-in`}>
+                    <div className={styles.opponentCircle}>{opponentEmoji}</div>
+                    <div className={styles.opponentMsg}>
+                        { isRevealed
+                        ? mySelectedCard === 3
+                            ? <span>The opponent {createUsernameFromUUID(opponentId)} lost!</span>
+                            : <span>The opponent {createUsernameFromUUID(opponentId)} Won!</span>
+                        : opponentSelectedCard === 0
+                            ? <span>The opponent {createUsernameFromUUID(opponentId)} Joined!</span>
+                            : <span>The opponent {createUsernameFromUUID(opponentId)} Selected a Card!</span>
+                        }
+                    </div>
+                </div>
+            }
+        </>
     );
 };
 

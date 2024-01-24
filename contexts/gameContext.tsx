@@ -4,9 +4,15 @@ import React, { createContext, useState, useContext, ReactNode } from 'react';
 // Define the shape of the context
 interface GameContextType {
     gameId: string | null;
-    setGameId: React.Dispatch<React.SetStateAction<string | null>>;
     isFirstPlayer: boolean;
+    opponentId: string | null;
+    opponentSelectedCard: number;
+    mySelectedCard: number;
+    setGameId: React.Dispatch<React.SetStateAction<string | null>>;
     setIsFirstPlayer: React.Dispatch<React.SetStateAction<boolean>>;
+    setOpponentId: React.Dispatch<React.SetStateAction<string | null>>;
+    setOpponentSelectedCard: React.Dispatch<React.SetStateAction<number>>;
+    setMySelectedCard: React.Dispatch<React.SetStateAction<number>>;
 }
 
 // Creating the context with an initial undefined value
@@ -30,10 +36,12 @@ interface GameProviderProps {
 export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     const [gameId, setGameId] = useState<string | null>(null);
     const [isFirstPlayer, setIsFirstPlayer] = useState<boolean>(false);
-    
+    const [opponentId, setOpponentId] = useState<string | null>(null);
+    const [opponentSelectedCard, setOpponentSelectedCard] = useState<number>(0);
+    const [mySelectedCard, setMySelectedCard] = useState<number>(0);
 
     // The value that will be supplied to the descendants
-    const value = { gameId, setGameId, isFirstPlayer, setIsFirstPlayer };
+    const value = { gameId, setGameId, isFirstPlayer, setIsFirstPlayer, opponentId, setOpponentId, opponentSelectedCard, setOpponentSelectedCard, mySelectedCard, setMySelectedCard };
 
     return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
 };

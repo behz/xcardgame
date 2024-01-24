@@ -33,16 +33,18 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
 
     useEffect(() => {
-        async function getUserId() {
-            const { data: { user } } = await supabase.auth.getUser();
-            if (user && !user.id) { 
-                console.log('User has not yet joined');
-                return; 
-            };
-            
-            setUserId(user!.id || null);
-        }
-        getUserId();
+        const { data } = supabase.auth.onAuthStateChange(
+            (event, session) => {
+              if (event === 'SIGNED_OUT') {
+                setUserId(null);
+              } else if (session) {
+                setUserId(session?.user.id || null);
+              }
+            })
+      
+          return () => {
+            data.subscription.unsubscribe()
+          }
     }, []);
 
     // The value that will be supplied to the descendants
