@@ -19,7 +19,15 @@ interface Card {
     icon: string;
 }
 
-const shuffleArray = (array: any[]): [] => {
+interface StaticImageData {
+    src: string;
+    height: number;
+    width: number;
+    blurDataURL?: string;
+}
+
+
+const shuffleArray = <T extends unknown>(array: T[]): T[] => {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
@@ -41,7 +49,7 @@ const GameBoard: React.FC = () => {
 
     const [selectedCard, setSelectedCard] = useState<number>(0);
     const [shuffledCards, setShuffledCards] = useState<Card[]>([]);
-    const [shuffledCardsImages, setShuffledCardsImages] = useState<[]>([]);
+    const [shuffledCardsImages, setShuffledCardsImages] = useState<StaticImageData[]>([]);
     const [isRevealed, setIsRevealed] = useState<boolean>(false);
 
     useEffect(() => {
@@ -69,7 +77,7 @@ const GameBoard: React.FC = () => {
                 <Card
                     key={card.id}
                     cardId={card.id}
-                    cardBackground={shuffledCardsImages[card.id-1]}
+                    cardBackground={shuffledCardsImages[card.id-1].src}
                     isRevealed={isRevealed}
                     isSelected={selectedCard === card.id}
                     cardIcon={card.icon}

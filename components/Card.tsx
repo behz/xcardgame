@@ -90,9 +90,6 @@ const Card: React.FC<CardProps> = ({ cardId, cardIcon, cardBackground, isReveale
                             objectFit: 'cover', // cover, contain, none
                         }}
                         />
-                        {/* <img src='https://framerusercontent.com/images/GYrERLEh0xG9GQ5QEJs3xATe4As.jpg' alt={`Card ${cardId}`} style={{ width: "100%", height: "100%" }} /> */}
-                        {/* {isRevealed ? `Card ${cardId}` : 'Face Down'}
-                        {isSelected ? 'Selected' : ''} */}
                     </div>
                 </motion.div>
 
@@ -106,8 +103,8 @@ const Card: React.FC<CardProps> = ({ cardId, cardIcon, cardBackground, isReveale
                         zIndex: isRevealed ? 1 : 0,
                     }}
                 >
-                    <div className={styles.cardContent}>
-                        {/* <img src='https://framerusercontent.com/images/X1MRkycVBLsfHj0ScNLAiIVA.jpg' alt={`Card ${cardId}`} style={{ width: "100%", height: "100%" }} /> */}
+                    <div className={`${styles.cardContent} ${styles.revlealedContent}`}>
+                        <span className={styles.icon}>{cardIcon}</span>
                     </div>
                 </motion.div>
             </motion.div>

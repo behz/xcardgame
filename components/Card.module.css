@@ -25,14 +25,12 @@
 .selectd .card {
     box-shadow: 0px 0px 0px 5px rgb(0 165 99 / 20%), 0px 7px 20px 0px rgb(0 0 0 / 20%);
 }
-/* .card:after{
-    content:" ";
-    position: absolute;
-    width: 100%;
-    height: 10px;
-    border-radius: 50%;
-    left:0;
-    bottom:-50px;
-    box-shadow: 0 30px 20px rgba(0,0,0,.3);
-    
-  } */
+
+.revlealedContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.revlealedContent .icon {
+    font-size: 10em;
+}
