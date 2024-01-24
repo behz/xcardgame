@@ -1,12 +1,15 @@
-import DeployButton from "../components/DeployButton";
+// import DeployButton from "../components/DeployButton";
 import AuthButton from "../components/AuthButton";
 import { createClient } from "@/utils/supabase/server";
-import ConnectSupabaseSteps from "@/components/ConnectSupabaseSteps";
-import SignUpUserSteps from "@/components/SignUpUserSteps";
+
 import Header from "@/components/Header";
 import { cookies } from "next/headers";
+import Game from '../components/Game';
+import { GameProvider } from '../contexts/gameContext';
+import { UserProvider } from '../contexts/userContext';
 
-export default async function Index() {
+
+const index: React.FC = () => {
   const cookieStore = cookies();
 
   const canInitSupabaseClient = () => {
@@ -26,7 +29,8 @@ export default async function Index() {
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
         <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-          <DeployButton />
+          {/* <DeployButton /> */}
+          <div>X Card Game</div>
           {isSupabaseConnected && <AuthButton />}
         </div>
       </nav>
@@ -34,8 +38,11 @@ export default async function Index() {
       <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-4xl px-3">
         <Header />
         <main className="flex-1 flex flex-col gap-6">
-          <h2 className="font-bold text-4xl mb-4">Next steps</h2>
-          {isSupabaseConnected ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
+          <UserProvider>
+            <GameProvider>
+              <Game/>
+            </GameProvider>
+          </UserProvider>
         </main>
       </div>
 
@@ -49,9 +56,19 @@ export default async function Index() {
             rel="noreferrer"
           >
             Supabase
+          </a><span> - </span>  
+          <a
+            href="https://nextjs.org/"
+            target="_blank"
+            className="font-bold hover:underline"
+            rel="noreferrer"
+          >
+            Next.js
           </a>
         </p>
       </footer>
     </div>
   );
 }
+
+export default index;
