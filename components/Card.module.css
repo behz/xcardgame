@@ -1,0 +1,38 @@
+.card {
+    border-radius: 1em;
+    background-color: #fff;
+    border: .75em solid rgb(255, 255, 255);
+    box-shadow: 0px 7px 20px 0px rgb(0 0 0 / 20%);
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    position: absolute;
+    cursor: pointer;
+}
+.cardContent {
+    display: flex;
+    align-items: center;
+    background-color: #fdf4e5;
+    width: 100%;
+    height: 100%;
+    border-radius: .65em;
+    overflow: hidden;
+}
+.cardContent img {
+    border-radius: .65em;
+    overflow: hidden;
+}
+.selectd .card {
+    box-shadow: 0px 0px 0px 5px rgb(0 165 99 / 20%), 0px 7px 20px 0px rgb(0 0 0 / 20%);
+}
+/* .card:after{
+    content:" ";
+    position: absolute;
+    width: 100%;
+    height: 10px;
+    border-radius: 50%;
+    left:0;
+    bottom:-50px;
+    box-shadow: 0 30px 20px rgba(0,0,0,.3);
+    
+  } */

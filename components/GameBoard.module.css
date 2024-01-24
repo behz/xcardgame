@@ -1,0 +1,9 @@
+.board {
+    width: 100%;
+    max-width: 65em;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}

@@ -1,19 +1,13 @@
 'use client'
 import React, { useEffect } from 'react';
-import useGame from '../hooks/useGame';
 import GameBoard from './GameBoard';
+import { GameProvider } from '../contexts/gameContext';
 
 const Game: React.FC = () => {
-    const { joinGame } = useGame();
-
-    useEffect(() => {
-        joinGame();
-    }, [joinGame]);
-
     return (
-        <div>
+        <GameProvider>
            <GameBoard />
-        </div>
+        </GameProvider>
     );
 };
 
