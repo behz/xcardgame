@@ -1,45 +1,52 @@
 .card {
-    border-radius: 1em;
-    background-color: #fff;
-    border: .75em solid rgb(255, 255, 255);
-    box-shadow: 0px 7px 20px 0px rgb(0 0 0 / 20%);
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    position: absolute;
-    cursor: pointer;
+  border-radius: 1em;
+  background-color: #fff;
+  border: 0.75em solid rgb(255, 255, 255);
+  box-shadow: 0px 7px 20px 0px rgb(0 0 0 / 20%);
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  position: absolute;
+  cursor: pointer;
 }
+
 .cardContent {
-    display: flex;
-    align-items: center;
-    background-color: #fdf4e5;
-    width: 100%;
-    height: 100%;
-    border-radius: .65em;
-    overflow: hidden;
+  display: flex;
+  align-items: center;
+  background-color: #fdf4e5;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.65em;
+  overflow: hidden;
 }
+
 .cardContent img {
-    border-radius: .65em;
-    overflow: hidden;
+  border-radius: 0.65em;
+  overflow: hidden;
 }
+
 .selectd .card {
-    box-shadow: 0px 0px 0px 5px rgb(0 165 99 / 20%), 0px 7px 20px 0px rgb(0 0 0 / 20%);
+  box-shadow: 0px 0px 0px 5px rgb(0 165 99 / 20%),
+    0px 7px 20px 0px rgb(0 0 0 / 20%);
 }
 
 .revlealedContent {
-    filter: grayscale(100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  filter: grayscale(100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .selectd .revlealedContent {
-    filter: none;
+  filter: none;
 }
+
 .revlealedContent .icon {
-    font-size: 8em;
+  font-size: 8em;
 }
 
 .opponentSelectd .card {
-    box-shadow: 0px 0px 0px 5px rgba(76, 0, 130, 0.2), 0px 7px 20px 0px rgb(0 0 0 / 20%);
-    cursor: auto;
+  box-shadow: 0px 0px 0px 5px rgba(76, 0, 130, 0.2),
+    0px 7px 20px 0px rgb(0 0 0 / 20%);
+  cursor: auto;
 }

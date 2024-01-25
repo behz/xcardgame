@@ -1,34 +1,34 @@
 .board {
-    width: 100%;
-    max-width: 65em;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: nowrap;
-    flex-direction: row;
+  width: 100%;
+  max-width: 65em;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
 }
 
 .opponentContainer {
-    position: fixed;
-    bottom: 4em;
-    left: 2em;
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
+  position: fixed;
+  bottom: 4em;
+  left: 2em;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 
 .opponentMsg {
-    padding-left: 1em;
+  padding-left: 1em;
 }
 
 .opponentCircle {
-    width: 2em;
-    height: 2em;
-    border: .1em solid darkviolet;
-    background-color: rgb(238, 226, 243);
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    font-size: 2em;
-    border-radius: 10em;
+  width: 2em;
+  height: 2em;
+  border: 0.1em solid darkviolet;
+  background-color: rgb(238, 226, 243);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 2em;
+  border-radius: 10em;
 }
